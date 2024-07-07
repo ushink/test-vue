@@ -1,3 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import QuizComponent from '../QuizComponent.vue';
+import { MockQuizData,  } from '@/mock/MockQuizData';
+</script>
 
-<template>MainPage</template>
+<template>
+  <QuizComponent :quiz="MockQuizData" />
+</template>
