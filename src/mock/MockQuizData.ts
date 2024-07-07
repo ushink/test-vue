@@ -94,3 +94,5 @@ export const MockQuizData: Quiz[] = [
     right: ['Создает новую переменную, которую нельзя изменить после ее объявления.']
   }
 ]
+
+export const MockRightData: number[][] = [[1], [0, 1, 2, 3, 4], [0], [1], [1], [1], [0], [3]]
