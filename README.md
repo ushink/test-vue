@@ -1,39 +1,27 @@
 # test
 
-This template should help get you started developing with Vue 3 in Vite.
+Разработать приложение для проведения тестирования пользователей. 
+Приложение должно отображать список вопросов и предоставлять возможность выбора одного или нескольких ответов для каждого вопроса. 
+После прохождения теста, пользователю должна быть предоставлена обратная связь о его результате.
 
-## Recommended IDE Setup
+## Требования:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### FRONTEND:
+- Использовать фреймворк Vue.js(версии 2 или 3) для разработки приложения.
+- Приложение должно быть реализовано в виде компонентов, которые можно переиспользовать.
+- Вопросы и варианты ответов должны храниться в отдельном JSON-файле и загружаться динамически.
+- Пользователь должен иметь возможность выбирать один или несколько вариантов ответов для каждого вопроса.
+- По окончании тестирования пользователю должны быть показаны правильные ответы и его результаты.
+- Дизайн приложения остается на усмотрение разработчика.
 
-## Type Support for `.vue` Imports in TS
+### BACKEND:
+- Используйте API Битрикс для сохранения результатов ответов пользователей.
+- Ответы должны быть связаны с пользователям прошедшем его.
+- Тест могут проходить только авторизованные пользователи.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Ожидаемый результат:
 
-## Customize configuration
+- Исходный код приложения в формате ZIP-архива. По бэкенд части достаточно только php файлов с реализованным api.
+- Приложение должно быть запускаемым и работать без ошибок.
+- Пример JSON-файла с вопросами и вариантами ответов.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
