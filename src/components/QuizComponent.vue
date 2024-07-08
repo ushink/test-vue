@@ -10,7 +10,8 @@ const { quiz } = defineProps<{
 const answers = ref([])
 
 const state = reactive({
-  isQuizFinish: false
+  isQuizFinish: false,
+  isDisabled: false
 })
 
 function submitAnswers() {
@@ -22,8 +23,17 @@ function submitAnswers() {
   } else {
     alert('Oops! You have some mistakes.')
   }
-
   state.isQuizFinish = true
+  state.isDisabled = true
+
+  setTimeout(
+    () => {
+      state.isQuizFinish = false
+      state.isDisabled = false
+      answers.value = []
+    },
+    1 * 60 * 1000
+  )
 }
 </script>
 
@@ -54,7 +64,9 @@ function submitAnswers() {
         </el-space>
       </el-checkbox-group>
     </div>
-    <el-button @click="submitAnswers" class="quiz-btn">Submit</el-button>
+    <el-button @click="submitAnswers" :disabled="state.isDisabled" class="quiz-btn"
+      >Submit</el-button
+    >
   </el-card>
 </template>
 
