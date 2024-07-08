@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { MockRightData, type Quiz } from '@/mock/MockQuizData'
-import { ElCard, ElCheckboxGroup, ElCheckbox, ElButton } from 'element-plus'
-import { ref } from 'vue'
+import { ElCard, ElCheckboxGroup, ElCheckbox, ElButton, ElSpace, ElText } from 'element-plus'
+import { reactive, ref } from 'vue'
 
 const { quiz } = defineProps<{
   quiz: Quiz[]
 }>()
 
 const answers = ref([])
+
+const state = reactive({
+  isQuizFinish: false
+})
 
 function submitAnswers() {
   const userAnswer = JSON.stringify(answers.value).replace(/\bnull\b\s*,/, '')
@@ -18,6 +22,8 @@ function submitAnswers() {
   } else {
     alert('Oops! You have some mistakes.')
   }
+
+  state.isQuizFinish = true
 }
 </script>
 
@@ -34,6 +40,18 @@ function submitAnswers() {
           class="option"
           >{{ option }}</el-checkbox
         >
+        <el-space v-if="state.isQuizFinish" class="answer">
+          <el-text tag="b"> Правильный ответ: </el-text>
+          <el-text
+            tag="mark"
+            v-for="(right, rightIndex) in el.right"
+            :label="rightIndex"
+            :key="rightIndex"
+            class="answer-right"
+          >
+            {{ right }}</el-text
+          >
+        </el-space>
       </el-checkbox-group>
     </div>
     <el-button @click="submitAnswers" class="quiz-btn">Submit</el-button>
@@ -65,7 +83,17 @@ function submitAnswers() {
   line-height: 1.5;
 }
 
-.quiz-btn{
+.answer {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px solid #999;
+}
+
+.answer-right {
+  color: rgb(0, 173, 17);
+}
+
+.quiz-btn {
   margin-top: 30px;
   width: 100%;
   cursor: pointer;
