@@ -13,9 +13,26 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: MainPage
+      component: MainPage,
+      meta: { requiresAuth: true }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !isAuthenticated()) {
+    next('/auth')
+  } else {
+    next()
+  }
+})
+
+function isAuthenticated(): boolean {
+  const userEmail = localStorage.getItem('userEmail')
+  if (userEmail) {
+    return true
+  }
+  return false
+}
 
 export default router
