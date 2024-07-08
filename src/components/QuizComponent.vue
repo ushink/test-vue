@@ -36,7 +36,7 @@ function submitAnswers() {
         >
       </el-checkbox-group>
     </div>
-    <el-button @click="submitAnswers">Submit</el-button>
+    <el-button @click="submitAnswers" class="quiz-btn">Submit</el-button>
   </el-card>
 </template>
 
@@ -63,5 +63,11 @@ function submitAnswers() {
   font-size: 18px;
   color: #393939;
   line-height: 1.5;
+}
+
+.quiz-btn{
+  margin-top: 30px;
+  width: 100%;
+  cursor: pointer;
 }
 </style>
