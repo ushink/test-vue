@@ -1,17 +1,17 @@
 export async function registerUser(name: string, email: string, password: string) {
   const apiUrl = 'https://b24-abbzfx.bitrix24.ru/rest/1/2o685zlpifc530n6/crm.contact.add'
-
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        Connection: 'keep-alive'
       },
       body: JSON.stringify({
-        field: {
+        fields: {
           NAME: name,
           EMAIL: [{ VALUE: email }],
-          PASSWORD: password
+          COMMENTS: 'comments'
         }
       })
     })
@@ -37,7 +37,7 @@ export async function getUserList() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        select: ['ID', 'NAME', 'EMAIL']
+        select: ['ID', 'NAME', 'EMAIL', 'COMMENTS']
       })
     })
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { MockRightData } from '@/mock/MockQuizData'
-import type { Quiz } from '@/types';
+import type { Quiz } from '@/types'
 import { ElCard, ElCheckboxGroup, ElCheckbox, ElButton, ElSpace, ElText } from 'element-plus'
 import { reactive, ref } from 'vue'
 
