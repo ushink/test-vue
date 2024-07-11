@@ -21,10 +21,10 @@ export async function registerUser(name: string, email: string) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const result = await response.json()
-    console.log(result)
+    return await response.json()
   } catch (error) {
     console.error('Ошибка при регистрации пользователя:', error)
+    return []
   }
 }
 
@@ -80,9 +80,9 @@ export async function updateUser(comments: string, id: number) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const result = await response.json()
-    console.log(result)
+    return await response.json()
   } catch (error) {
     console.error('Ошибка при обновлении пользователя:', error)
+    return []
   }
 }

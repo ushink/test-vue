@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getUserList } from '@/api'
+import { getUserList, updateUser } from '@/api'
 import { MockRightData } from '@/mock/MockQuizData'
 import type { Quiz, User } from '@/types'
 import { ElCard, ElCheckboxGroup, ElCheckbox, ElButton, ElSpace, ElText } from 'element-plus'
@@ -12,10 +12,12 @@ const { quiz } = defineProps<{
 const answers = ref([])
 const userList = ref()
 const userId = ref()
+const userResult = ref()
 
 const state = reactive({
   isQuizFinish: false,
-  isDisabled: false
+  isDisabled: false,
+  trueAnswerCounter: 0
 })
 
 onMounted(async () => {
@@ -31,35 +33,34 @@ async function filterUser() {
 
   Object.keys(targetObj).forEach(function (key) {
     userId.value = targetObj[key].ID
+    userResult.value = targetObj[key].COMMENTS
   })
 }
 
 function submitAnswers() {
-  const userAnswer = JSON.stringify(answers.value).replace(/\bnull\b\s*,/, '')
-  const trueAnswer = JSON.stringify(MockRightData)
+  Object.entries(answers.value).forEach(function ([key, value]) {
+    if (JSON.stringify(MockRightData[Number(key) - 1]) === JSON.stringify(value)) {
+      state.trueAnswerCounter += 1
+    }
+  })
 
-  if (userAnswer === trueAnswer) {
-    alert('Okay!')
-  } else {
-    alert('Oops! You have some mistakes.')
-  }
+  alert(`Ваш результат: ${state.trueAnswerCounter} / 8`)
+  updateUser(`${state.trueAnswerCounter} / 8`, userId.value)
+
   state.isQuizFinish = true
   state.isDisabled = true
-  console.log(userId.value)
 
-  setTimeout(
-    () => {
-      state.isQuizFinish = false
-      state.isDisabled = false
-      answers.value = []
-    },
-    1 * 60 * 1000
-  )
+  setTimeout(() => {
+    state.isQuizFinish = false
+    state.isDisabled = false
+    answers.value = []
+  }, 60 * 1000)
 }
 </script>
 
 <template>
   <el-card class="quiz-card">
+    <el-text>Previous Result: {{ userResult }}</el-text>
     <div v-for="el in quiz" :key="el.id">
       <h2>{{ el.title }}</h2>
       <p class="question">{{ el.questionText }}</p>
