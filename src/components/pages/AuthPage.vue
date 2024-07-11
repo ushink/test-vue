@@ -2,9 +2,9 @@
 import { reactive, ref } from 'vue'
 import type { ComponentSize, FormInstance } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { getUserList, registerUser } from '@/api'
-import type { AuthForm } from '@/types';
-import { rules } from '@/utils/rules';
+import { registerUser } from '@/api'
+import type { AuthForm } from '@/types'
+import { rules } from '@/utils/rules'
 
 const router = useRouter()
 
@@ -16,13 +16,12 @@ const authForm = reactive<AuthForm>({
   password: ''
 })
 
-
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
       console.log('submit!')
-      registerUser(authForm.name, authForm.email, authForm.password)
+      registerUser(authForm.name, authForm.email)
       localStorage.setItem('userEmail', authForm.email)
       router.push('/')
     } else {
@@ -30,8 +29,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     }
   })
 }
-
-getUserList()
 </script>
 
 <template>

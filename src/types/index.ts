@@ -11,3 +11,14 @@ export interface Quiz {
   options: string[]
   right: string[]
 }
+
+type EMAIL = {
+  VALUE: string
+}
+
+export interface User {
+  ID: number
+  NAME: string
+  EMAIL: EMAIL[]
+  COMMENTS: string
+}

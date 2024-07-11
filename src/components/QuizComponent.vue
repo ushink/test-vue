@@ -1,19 +1,38 @@
 <script setup lang="ts">
+import { getUserList } from '@/api'
 import { MockRightData } from '@/mock/MockQuizData'
-import type { Quiz } from '@/types'
+import type { Quiz, User } from '@/types'
 import { ElCard, ElCheckboxGroup, ElCheckbox, ElButton, ElSpace, ElText } from 'element-plus'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 
 const { quiz } = defineProps<{
   quiz: Quiz[]
 }>()
 
 const answers = ref([])
+const userList = ref()
+const userId = ref()
 
 const state = reactive({
   isQuizFinish: false,
   isDisabled: false
 })
+
+onMounted(async () => {
+  userList.value = await getUserList()
+  await filterUser()
+})
+
+async function filterUser() {
+  const resultEmail = localStorage.getItem('userEmail')
+  const targetObj = await userList.value.result.filter(
+    (el: User) => el.EMAIL[0].VALUE === resultEmail
+  )
+
+  Object.keys(targetObj).forEach(function (key) {
+    userId.value = targetObj[key].ID
+  })
+}
 
 function submitAnswers() {
   const userAnswer = JSON.stringify(answers.value).replace(/\bnull\b\s*,/, '')
@@ -26,6 +45,7 @@ function submitAnswers() {
   }
   state.isQuizFinish = true
   state.isDisabled = true
+  console.log(userId.value)
 
   setTimeout(
     () => {
@@ -46,7 +66,7 @@ function submitAnswers() {
       <el-checkbox-group v-model="answers[el.id]" fill="primary" class="options-box">
         <el-checkbox
           v-for="(option, optionIndex) in el.options"
-          :label="optionIndex"
+          :value="optionIndex"
           :key="optionIndex"
           class="option"
           >{{ option }}</el-checkbox
