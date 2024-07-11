@@ -1,10 +1,4 @@
-export interface Quiz {
-  id: number
-  title: string
-  questionText: string
-  options: string[]
-  right: string[]
-}
+import type { Quiz } from "@/types"
 
 export const MockQuizData: Quiz[] = [
   {
